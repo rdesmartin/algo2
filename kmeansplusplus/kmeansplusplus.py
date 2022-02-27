@@ -12,7 +12,7 @@ def euclidian_distance(a, b):
     return np.sqrt(sum((a - b) ** 2))
 
 def calculate_dist(d1, d2):
-    age_dist  = abs(float(d1[0]) - float(d2[0])) * 0.8
+    age_dist = abs(float(d1[0]) - float(d2[0])) * 0.8
     hypertension_dist = abs(float(d1[1]) - float(d2[1])) * 0.8
     heart_disease_dist = abs(float(d1[2]) - float(d2[2])) * 0.8
     smoking_status_dist = abs(float(d1[6]) - float(d2[6])) * 0.8
