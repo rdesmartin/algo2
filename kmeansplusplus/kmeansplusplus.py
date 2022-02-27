@@ -2,28 +2,25 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
-from sympy import centroid
-sns.set_theme(style='darkgrid')
+
 
 
 def euclidian_distance(a, b):
     return np.sqrt(sum((a - b) ** 2))
 
 def calculate_dist(d1, d2):
-    print(d1)
-    print(d2)
-    age_dist  = abs(float(d1[2]) - float(d2[2])) * 0.8
-    hypertension_dist = abs(float(d1[3]) - float(d2[3])) * 0.8
-    heart_disease_dist = abs(float(d1[4]) - float(d2[4])) * 0.8
-    smoking_status_dist = abs(float(d1[11]) - float(d2[11])) * 0.8
-    avg_glucose_level_dist = abs(float(d1[8]) - float(d2[8])) * 0.5
-    bmi_dist = abs(float(d1[9]) - float(d2[9])) * 0.5
-    residence_type_dist = abs(float(d1[7]) - float(d2[7])) * 0.2
+    age_dist  = abs(float(d1[0]) - float(d2[0])) * 0.8
+    hypertension_dist = abs(float(d1[1]) - float(d2[1])) * 0.8
+    heart_disease_dist = abs(float(d1[2]) - float(d2[2])) * 0.8
+    smoking_status_dist = abs(float(d1[6]) - float(d2[6])) * 0.8
+    avg_glucose_level_dist = abs(float(d1[4]) - float(d2[4])) * 0.5
+    bmi_dist = abs(float(d1[5]) - float(d2[5])) * 0.5
+    residence_type_dist = abs(float(d1[3]) - float(d2[3])) * 0.2
     distance = age_dist + hypertension_dist + heart_disease_dist + residence_type_dist + avg_glucose_level_dist + bmi_dist + smoking_status_dist
     return distance
     
 def init_centroid(centroids, data, distance=calculate_dist):
-    distances = [min([distance(point, x) for point in centroids]) for x in data]
+    distances = np.array([min([distance(point, x) for point in centroids]) for x in data])
     # normalize distances so that their sum is 1 -> probability law
     probabilities = distances / sum(distances)
     # chose new centroid according to the probability distribution defined above
@@ -36,7 +33,7 @@ def init_centroids(cluster_nb, data):
     print(centroid0)
     centroids = np.array([centroid0])
     for i in range(cluster_nb - 1):
-        centroids = np.append(centroids, [init_centroid(centroids[-1], data)], axis=0)
+        centroids = np.append(centroids, [init_centroid(centroids, data)], axis=0)
     return centroids
 
 
