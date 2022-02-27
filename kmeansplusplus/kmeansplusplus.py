@@ -46,10 +46,10 @@ def assign_points(data, centroids, distance=calculate_dist):
 
 
 def update_clusters(data, centroids, cluster_assignments):
-    for i in range(len(centroids)):
+    for i in range(centroids.shape[0]):
         cluster_idxr = np.where(cluster_assignments == np.full(len(cluster_assignments), i))
-        centroids[i, 0] = np.mean(data[cluster_idxr, 0])
-        centroids[i, 1] = np.mean(data[cluster_idxr, 1])
+        for j in range(centroids.shape[1]):
+            centroids[i, j] = np.mean(data[cluster_idxr, j])
     return centroids
 
 
