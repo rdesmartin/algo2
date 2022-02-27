@@ -1,3 +1,6 @@
+from typing import Iterable
+from dataclasses import dataclass
+
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -30,7 +33,6 @@ def init_centroid(centroids, data, distance=calculate_dist):
 
 def init_centroids(cluster_nb, data):
     centroid0 = data[np.random.randint(len(data))]
-    print(centroid0)
     centroids = np.array([centroid0])
     for i in range(cluster_nb - 1):
         centroids = np.append(centroids, [init_centroid(centroids, data)], axis=0)
@@ -61,14 +63,15 @@ def k_means_iteration(data, centroids):
 
 def k_means(data, nb_clusters, iterations=20):
     centroids = init_centroids(nb_clusters, data)
+    cluster_assignments = None
 
     for i in range(iterations):
         centroids, cluster_assignments = k_means_iteration(data, centroids)
-        plot = sns.scatterplot(x=data[:, 0], y=data[:, 1], c=cluster_assignments)
-        plot.figure.savefig(f"k_means_{nb_clusters}_it_{i}.png")
-        plt.scatter(centroids[:, 0], centroids[:, 1], color='r')
-        print(centroids)
-        #inertia = compute_inertia(data, centroids, cluster_assignments)
+        # plot = sns.scatterplot(x=data[:, 0], y=data[:, 1], c=cluster_assignments)
+        # plot.figure.savefig(f"k_means_{nb_clusters}_it_{i}.png")
+        # plt.scatter(centroids[:, 0], centroids[:, 1], color='r')
+
+    return centroids, cluster_assignments
 
 if __name__ == "__main__":
     DATA_PATH = "data/data.csv"
